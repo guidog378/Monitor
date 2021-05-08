@@ -19,7 +19,7 @@ public class Receptor implements Runnable {
 
 	public void run() {
 		try {
-			ServerSocket sv = new ServerSocket(9997);
+			ServerSocket sv = new ServerSocket(9790);
 			while(true) {
 				Socket socket = sv.accept();
 				ObjectInputStream fe = new ObjectInputStream(socket.getInputStream());
