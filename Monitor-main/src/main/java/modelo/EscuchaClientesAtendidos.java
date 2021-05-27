@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import comunicacion.Conexion;
-import informacionCompartida.InfoClienteAtendido;
-import informacionCompartida.InfoClientesAtendidos;
-import informacionCompartida.InfoPeticion;
+import modeloInfo.InfoClienteAtendido;
+import modeloInfo.InfoClientesAtendidos;
+import modeloInfo.InfoPeticion;
 import ventana.Ventana;
 
 public class EscuchaClientesAtendidos implements Runnable {
