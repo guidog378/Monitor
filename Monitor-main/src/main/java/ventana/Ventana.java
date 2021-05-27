@@ -11,16 +11,21 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 
-import modeloSocket.Receptor;
+import componentesVista.tablaClientes;
+import comunicacion.Conexion;
+import modelo.EscuchaClientesAtendidos;
 
 import java.awt.GridLayout;
 import java.awt.SystemColor;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
-	private JLabel box;
-	private JLabel dni;
+	private JTable table;
+	private tablaClientes modeloTabla;
 
 	/**
 	 * Launch the application.
@@ -30,7 +35,8 @@ public class Ventana extends JFrame {
 			public void run() {
 				try {
 					Ventana frame = new Ventana();
-					Thread miThreadReceptor = new Thread(new Receptor(frame.getDni(),frame.getBox()));
+					Conexion conexion = new Conexion();
+					Thread miThreadReceptor = new Thread(new EscuchaClientesAtendidos(frame,conexion));
 					miThreadReceptor.start();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -56,48 +62,32 @@ public class Ventana extends JFrame {
 		panel.setBackground(SystemColor.activeCaption);
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("Proximo Cliente:");
+		JLabel lblNewLabel = new JLabel("Cartelera de turnos:");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 28));
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new GridLayout(2, 1, 0, 0));
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(SystemColor.inactiveCaption);
-		FlowLayout flowLayout = (FlowLayout) panel_2.getLayout();
-		flowLayout.setVgap(30);
-		panel_1.add(panel_2);
+		JScrollPane scrollPane = new JScrollPane();
+		panel_1.add(scrollPane);
 		
-		JLabel lblNewLabel_1 = new JLabel("Box:");
-		panel_2.add(lblNewLabel_1);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
-		box = new JLabel("En Espera");
-		panel_2.add(box);
-		box.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(SystemColor.inactiveCaption);
-		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
-		flowLayout_1.setVgap(30);
-		panel_1.add(panel_3);
-		
-		JLabel lblNewLabel_2 = new JLabel("DNI:\r\n");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panel_3.add(lblNewLabel_2);
-		
-		dni = new JLabel("En Espera");
-		dni.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		panel_3.add(dni);
+		modeloTabla = new tablaClientes();
+		table = new JTable(modeloTabla);
+		scrollPane.setViewportView(table);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setViewportView(table);
+		scrollPane.setColumnHeaderView(table.getTableHeader());
+		table.setFillsViewportHeight(true);
 	}
 
-	public JLabel getBox() {
-		return box;
+	public tablaClientes getModeloTabla() {
+		return modeloTabla;
 	}
 
-	public JLabel getDni() {
-		return dni;
+	public JTable getTable() {
+		return table;
 	}
+	
 }
