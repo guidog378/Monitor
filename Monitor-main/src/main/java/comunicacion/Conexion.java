@@ -33,10 +33,8 @@ public class Conexion {
 		Informable paquete = null;
 		ObjectInputStream fe;
 		try {
-			InputStream is = this.socket.getInputStream();
-			fe = new ObjectInputStream(is);
-			paquete = (Informable)fe.readObject();	
-			System.out.println(paquete.getIdOperacion());
+			fe = new ObjectInputStream(this.socket.getInputStream());
+			paquete = (Informable)fe.readObject();
 		} catch (IOException e) {
 			System.out.println("IOException");
 		} catch (ClassNotFoundException e) {
