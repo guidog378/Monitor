@@ -27,14 +27,17 @@ public class EscuchaClientesAtendidos implements Runnable {
 				Stack<InfoClienteAtendido> clientes = clientesAtendidos.getPilaClientesAtendidos();
 				LinkedList<Integer> dnis = new LinkedList<Integer>();
 				LinkedList<Integer> box = new LinkedList<Integer>();
+				LinkedList<String> nombres = new LinkedList<String>();
 				InfoClienteAtendido actual;
 				while(!clientes.isEmpty()) {
 					 actual = clientes.pop();
 					 dnis.add(actual.getDni());
 					 box.add(actual.getBox());
+					 nombres.add(actual.getNombre());
 				}
 				this.window.getModeloTabla().setClientes(dnis);
 				this.window.getModeloTabla().setBox(box);
+				this.window.getModeloTabla().setNombres(nombres);
 				this.window.getTable().repaint();
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {

@@ -9,6 +9,7 @@ import javax.swing.table.TableModel;
 public class tablaClientes implements TableModel{
 	private LinkedList<Integer> clientes;
 	private LinkedList<Integer> box;
+	private LinkedList<String> nombres;
 	
 	private Class[] types;
 	private String[] columnName;
@@ -16,12 +17,15 @@ public class tablaClientes implements TableModel{
 	public tablaClientes() {
 		this.clientes = new LinkedList<Integer>();
 		this.box = new LinkedList<Integer>();
-		this.types = new Class[2];
+		this.nombres = new LinkedList<String>();
+		this.types = new Class[3];
 		types[0] = java.lang.Integer.class;
 		types[1] = java.lang.Integer.class;
-		this.columnName = new String[2];
+		types[2] = java.lang.String.class;
+		this.columnName = new String[3];
 		columnName[0] = "Box";
 		columnName[1] = "DNI";
+		columnName[2] = "Nombre";
 	}
 
 	public void addTableModelListener(TableModelListener arg0) {
@@ -32,7 +36,7 @@ public class tablaClientes implements TableModel{
 	}
 
 	public int getColumnCount() {
-		return 2;
+		return 3;
 	}
 
 	public String getColumnName(int columna) {
@@ -48,11 +52,14 @@ public class tablaClientes implements TableModel{
 		if(!this.clientes.isEmpty() && fila<this.clientes.size()) {
 			Integer box = this.box.get(fila);
 			Integer dni = this.clientes.get(fila);
+			String nombre = this.nombres.get(fila);
 			switch(columna) {
 				case 0: auxObj = Integer.toString(box);
 						break;
 				case 1:	auxObj = Integer.toString(dni);
 						break;
+				case 2: auxObj = nombre;
+				        break;
 			}
 		}
 		return auxObj;
@@ -74,6 +81,10 @@ public class tablaClientes implements TableModel{
 
 	public void setBox(LinkedList<Integer> box) {
 		this.box = box;
+	}
+	
+	public void setNombres(LinkedList<String> nombres) {
+		this.nombres = nombres;
 	}
 
 }
